@@ -1,0 +1,92 @@
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Select Country and Sector</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f0f0f0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                height: 100vh;
+                margin: 0;
+            }
+            h1 {
+                color: #333;
+                margin-bottom: 20px;
+            }
+            form {
+                background: white;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+            select, input[type=submit] {
+                width: 100%;
+                padding: 10px;
+                margin: 10px 0;
+                border-radius: 5px;
+                border: 1px solid #ddd;
+            }
+            input[type=submit] {
+                background-color: #007bff;
+                color: white;
+                font-weight: bold;
+                cursor: pointer;
+                border: none;
+            }
+            input[type=submit]:hover {
+                background-color: #0056b3;
+            }
+
+            .loading {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(255, 255, 255, 0.7);
+                z-index: 1000;
+                text-align: center;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+            }
+
+            .loading p {
+                color: #666;
+                margin-top: 10px;
+            }
+
+        </style>
+    </head>
+    <body>
+        <h1>Twitter Trends Fetcher</h1>
+        <form method="POST">
+            <select name="country">
+                <option value="india">India</option>
+                <option value="pakistan">Pakistan</option>
+                <option value="united-states">United States</option>
+                <option value="saudi-arabia">Saudi Arabia</option>
+                <option value="japan">Japan</option>
+                <option value="">Worldwide</option>
+            </select>
+            <input type="submit" value="Show Trends">
+        </form>
+
+        <div class="loading" id="loadingIndicator">
+            <div class="spinner"></div>
+            <p>This will only take a few seconds...</p>
+        </div>
+
+        <script>
+            document.querySelector('form').onsubmit = function() {
+                document.getElementById('loadingIndicator').style.display = 'flex';
+            };
+        </script>
+
+    </body>
+    </html>

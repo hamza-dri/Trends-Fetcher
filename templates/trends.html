@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Trending Topics</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+            margin: 0;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        select, input[type=submit] {
+            padding: 10px;
+            margin-right: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        input[type=submit] {
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            border: none;
+        }
+        input[type=submit]:hover {
+            background-color: #0056b3;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #007bff;
+            color: #fff;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+    <script>
+        window.onload = function() {
+            function filterTrendsBySector(sector) {
+                var rows = document.querySelectorAll('#trendsTable tbody tr');
+                rows.forEach(function(row) {
+                    var trendSector = row.getAttribute('data-sector');
+                    if (sector === 'All' || trendSector === sector) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            }
+
+            document.getElementById('sectorSelect').addEventListener('change', function() {
+                filterTrendsBySector(this.value);
+            });
+        }
+    </script>
+</head>
+<body>
+    <form method="POST">
+        <select name="country">
+            <option value="india" {% if country == 'india' %}selected{% endif %}>India</option>
+            <option value="pakistan" {% if country == 'pakistan' %}selected{% endif %}>Pakistan</option>
+            <option value="united-states" {% if country == 'united-states' %}selected{% endif %}>United States</option>
+            <option value="saudi-arabia" {% if country == 'saudi-arabia' %}selected{% endif %}>Saudi Arabia</option>
+            <option value="japan" {% if country == 'japan' %}selected{% endif %}>Japan</option>
+        </select>
+        <select id="sectorSelect">
+            <option value="All">All Sectors</option>
+            <option value="Entertainment">Entertainment</option>
+            <option value="Technology">Technology</option>
+            <option value="Fashion">Fashion</option>
+            <option value="Sports">Sports</option>
+            <option value="Politics">Politics</option>
+            <option value="Other">Other</option>
+        </select>
+        <input type="submit" value="Show Trends">
+    </form>
+
+    <h1>Trending Topics in {{ country | capitalize }}</h1>
+    <table id="trendsTable">
+        <thead>
+            <tr>
+                <th>Trends</th>
+                <th>Tweets</th>
+                <th>Sector</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tbody>
+                {% for trend, count in trends.items() %}
+                <tr data-sector="{{ sectors[trend] }}">
+                    <td>{{ trend }}</td>
+                    <td>{{ count or '-' }}</td>
+                    <td>{{ sectors[trend] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </tbody>
+    </table>
+</body>
+</html>
